@@ -24,6 +24,7 @@ data class Product(
         private const val PRODUCT_ID_PADDING = '0'
         private const val TRUE = -1
         private const val FALSE = 0
+        private const val LINE_SEPARATOR = "____"
     }
 
     /**
@@ -46,9 +47,13 @@ data class Product(
         |${if (valid) TRUE else FALSE}
         |${if (isNew) TRUE else FALSE}
         |${if (isOnSale) TRUE else FALSE}
-        |$description
+        |${description
+            .lines()
+            .joinToString(separator = LINE_SEPARATOR)
+        }
         $ingredients"""
         .lines()
         .filterIndexed { index, _ -> index != 0 }
         .joinToString(separator = CSV_SEPARATOR) { it.trimMargin("|") }
+        .replace(LINE_SEPARATOR, "\n")
 }
