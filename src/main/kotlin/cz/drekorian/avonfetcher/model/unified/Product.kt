@@ -47,10 +47,10 @@ data class Product(
         |${if (valid) TRUE else FALSE}
         |${if (isNew) TRUE else FALSE}
         |${if (isOnSale) TRUE else FALSE}
-        |${description
+        |"${description
             .lines()
             .joinToString(separator = LINE_SEPARATOR)
-        }
+        }"
         $ingredients"""
         .lines()
         .filterIndexed { index, _ -> index != 0 }
