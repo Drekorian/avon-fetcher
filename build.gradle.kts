@@ -22,7 +22,7 @@ dependencies {
     implementation("com.github.jkcclemens", "khttp", "-SNAPSHOT")
     implementation(libs.kotlin.logging)
     implementation(libs.sl4j.simple)
-    implementation("org.jsoup", "jsoup", "1.11.3")
+    implementation("org.jsoup", "jsoup", "1.17.2")
     testImplementation("junit", "junit", "4.12")
 }
 
