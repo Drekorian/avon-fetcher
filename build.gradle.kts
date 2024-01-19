@@ -20,7 +20,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.github.jkcclemens", "khttp", "-SNAPSHOT")
-    implementation("io.github.microutils:kotlin-logging:1.12.5")
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("org.slf4j", "slf4j-simple", "1.7.36")
     implementation("org.jsoup", "jsoup", "1.11.3")
     testImplementation("junit", "junit", "4.12")
