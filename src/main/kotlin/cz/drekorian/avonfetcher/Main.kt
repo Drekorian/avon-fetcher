@@ -3,6 +3,7 @@
 package cz.drekorian.avonfetcher
 
 import cz.drekorian.avonfetcher.flow.MasterFlow
+import org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY
 import java.util.*
 
 private const val ALLOWED_CAMPAIGN_LENGTH = 6
@@ -12,7 +13,7 @@ private const val I18N_RESOURCE_BUNDLE = "locale"
 //val logger = KotlinLogging.logger("main")
 fun main(args: Array<String>) {
     if (args.contains("debug")) {
-        System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "TRACE")
+        System.setProperty(DEFAULT_LOG_LEVEL_KEY, "TRACE")
     }
 
     // load up the I18n singleton
