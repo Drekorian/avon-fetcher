@@ -23,7 +23,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:1.12.5")
     implementation("org.slf4j", "slf4j-simple", "1.7.36")
     implementation("org.jsoup", "jsoup", "1.11.3")
-    testImplementation("junit", "junit", "4.12")
+    testImplementation("junit", "junit", "4.13.2")
 }
 
 configure<JavaPluginConvention> {
