@@ -1,7 +1,7 @@
 [versions]
 
 jsoup = "1.17.2"
-junit = "4.12"
+junit = "4.13.2"
 kotlin = "1.9.22"
 kotlinLogging = "1.12.5"
 sj4j = "2.0.11"
