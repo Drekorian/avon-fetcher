@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    kotlin("jvm") version "1.3.50"
+    kotlin("jvm") version "1.9.22"
 }
 
 group = "cz.drekorian"
