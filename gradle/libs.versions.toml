@@ -1,0 +1,10 @@
+[versions]
+
+kotlin = "1.9.22"
+kotlinLogging = "1.12.5"
+sj4j = "1.7.36"
+
+[libraries]
+
+kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlinLogging" }
+sl4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "sj4j" }

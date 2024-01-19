@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
-    kotlin("jvm") version "1.9.22"
+    kotlin("jvm") version libs.versions.kotlin.get()
 }
 
 group = "cz.drekorian"
@@ -20,8 +20,8 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.github.jkcclemens", "khttp", "-SNAPSHOT")
-    implementation("io.github.microutils:kotlin-logging:1.12.5")
-    implementation("org.slf4j", "slf4j-simple", "1.7.36")
+    implementation(libs.kotlin.logging)
+    implementation(libs.sl4j.simple)
     implementation("org.jsoup", "jsoup", "1.11.3")
     testImplementation("junit", "junit", "4.12")
 }
