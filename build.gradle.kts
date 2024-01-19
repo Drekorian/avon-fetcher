@@ -1,6 +1,5 @@
-import org.gradle.jvm.tasks.Jar
-import java.net.URI
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URI
 
 plugins {
     java
@@ -22,8 +21,9 @@ dependencies {
     implementation("com.github.jkcclemens", "khttp", "-SNAPSHOT")
     implementation(libs.kotlin.logging)
     implementation(libs.sl4j.simple)
-    implementation("org.jsoup", "jsoup", "1.11.3")
-    testImplementation("junit", "junit", "4.12")
+    implementation(libs.jsoup)
+
+    testImplementation(libs.junit)
 }
 
 configure<JavaPluginConvention> {

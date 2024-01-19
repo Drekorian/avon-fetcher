@@ -1,10 +1,14 @@
 [versions]
 
+jsoup = "1.17.2"
+junit = "4.12"
 kotlin = "1.9.22"
 kotlinLogging = "1.12.5"
 sj4j = "2.0.11"
 
 [libraries]
 
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlinLogging" }
 sl4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "sj4j" }
