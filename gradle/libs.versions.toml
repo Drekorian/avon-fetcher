@@ -2,7 +2,7 @@
 
 kotlin = "1.9.22"
 kotlinLogging = "1.12.5"
-sj4j = "1.7.36"
+sj4j = "2.0.11"
 
 [libraries]
 
