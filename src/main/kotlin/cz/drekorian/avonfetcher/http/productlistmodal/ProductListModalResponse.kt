@@ -1,13 +1,16 @@
 package cz.drekorian.avonfetcher.http.productlistmodal
 
 import cz.drekorian.avonfetcher.model.productlist.Product
-import org.json.JSONArray
-import org.json.JSONObject
+import cz.drekorian.avonfetcher.model.productlist.ProductModal
+import kotlinx.serialization.Serializable
 
-class ProductListModalResponse(data: JSONArray) {
+@Serializable
+class ProductListModalResponse(
+    private val productModals: List<ProductModal>,
+) {
 
-    val products = data.map {
-        val jsonObject = it as JSONObject
-        Product(jsonObject)
-    }.groupBy { it.id }
+    val products: Map<String?, List<Product>>
+        get() = productModals
+            .map { modal -> modal.product }
+            .groupBy { it.id }
 }

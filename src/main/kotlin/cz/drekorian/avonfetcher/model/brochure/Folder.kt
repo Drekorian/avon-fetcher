@@ -1,18 +1,14 @@
 package cz.drekorian.avonfetcher.model.brochure
 
-import org.json.JSONObject
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
-class Folder(jsonObject: JSONObject) {
-
-    companion object {
-        const val KEY_TITLE = "Title"
-        const val KEY_PAGE_COUNT = "PageCount"
-        const val KEY_FOLDER = "Folder"
-        const val KEY_PUBLISHED = "Published"
-    }
-
-    val title = jsonObject.optString(KEY_TITLE)
-    val pageCount = jsonObject.optInt(KEY_PAGE_COUNT)
-    val folder = jsonObject.optString(KEY_FOLDER)
-    val published = jsonObject.optBoolean(KEY_PUBLISHED)
-}
+@OptIn(ExperimentalSerializationApi::class)
+@Serializable
+data class Folder(
+    @JsonNames("Title") val title: String = "",
+    @JsonNames("PageCount") val pageCount: Int = 0,
+    @JsonNames("Folder") val folder: String = "",
+    @JsonNames("Published") val isPublished: Boolean = false,
+)

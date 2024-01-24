@@ -8,11 +8,12 @@ import cz.drekorian.avonfetcher.http.brochure.summaries.BrochureSummariesRequest
 import cz.drekorian.avonfetcher.http.productlistmodal.ProductListModalRequest
 import cz.drekorian.avonfetcher.http.productlistmodal.ProductListModalResponse
 import cz.drekorian.avonfetcher.model.brochure.Folder
-import cz.drekorian.avonfetcher.model.brochure.Product
+import cz.drekorian.avonfetcher.model.brochure.Page
+import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
+import cz.drekorian.avonfetcher.model.unified.Product as UnifiedProduct
 
 val logger = KotlinLogging.logger { }
-
 
 class MasterFlow {
 
@@ -22,13 +23,13 @@ class MasterFlow {
     }
 
     fun execute(campaignId: String) {
-        val brochureSummariesResponse = BrochureSummariesRequest().send(campaignId)
+        val brochureSummariesResponse = runBlocking { BrochureSummariesRequest().send(campaignId) }
         if (brochureSummariesResponse == null) {
             logger.error(I18n.get("master_flow_summaries_response_null"))
             return
         }
 
-        val folders: List<Folder> = brochureSummariesResponse.folders
+        val folders: List<Folder> = brochureSummariesResponse.data
 
         // log fetched folders
         with(logger) {
@@ -45,29 +46,31 @@ class MasterFlow {
                         it.title,
                         it.pageCount,
                         it.folder,
-                        it.published
+                        it.isPublished
                     )
                 )
             }
         }
 
-        val products: MutableList<Product> = mutableListOf()
-        for (folder: Folder in folders) {
-            val brochureFolderResponse = BrochureFolderRequest().send(campaignId, folder.folder)
-            if (brochureFolderResponse == null) {
-                logger.error(I18n.get("master_flow_brochure_folder_response").format(folder.folder))
-                return
-            }
+        val pages: List<Page> = buildList {
+            for (folder: Folder in folders) {
+                val brochureFolderResponse = runBlocking { BrochureFolderRequest().send(campaignId, folder.folder) }
+                if (brochureFolderResponse == null) {
+                    logger.error(I18n.get("master_flow_brochure_folder_response").format(folder.folder))
+                    return
+                }
 
-            brochureFolderResponse.run {
-                products.addAll(brochureFolderResponse.products)
+                addAll(brochureFolderResponse.pages)
             }
         }
 
-        val validProducts: List<String> = products
+        val validProducts: List<String> = pages.asSequence()
+            .flatMap { page -> page.hotSpots ?: emptyList() }
+            .flatMap { hotspot -> hotspot.products ?: emptyList() }
             .filter { it.productId != "0" }
-            .map { it.productId }
+            .map { product -> product.productId }
             .distinct()
+            .toList()
 
         val modalProducts: MutableMap<String?, List<cz.drekorian.avonfetcher.model.productlist.Product>> =
             mutableMapOf()
@@ -77,14 +80,15 @@ class MasterFlow {
             .groupBy { (index, _) -> index / 10 }
             .forEach { (_, products) ->
                 val productList = products.map { (_, values) -> values }
-                val productListModalResponse: ProductListModalResponse? =
+                val productListModalResponse: ProductListModalResponse? = runBlocking {
                     ProductListModalRequest().send(productList)
+                }
                 if (productListModalResponse == null) {
                     logger.warn(I18n.get("master_flow_product_list_modal_response").format(productList))
                     // fallback (try each product ID separately)
                     for (product in products) {
                         val fallbackResponse: ProductListModalResponse? =
-                            ProductListModalRequest().send(listOf(product.value))
+                            runBlocking { ProductListModalRequest().send(listOf(product.value)) }
                         if (fallbackResponse == null) {
                             logger.error(I18n.get("master_flow_product_fallback_failed").format(product))
                         } else {
@@ -96,25 +100,27 @@ class MasterFlow {
                 }
             }
 
-        val unifiedProducts: MutableList<cz.drekorian.avonfetcher.model.unified.Product> = mutableListOf()
-        products.forEach { validProduct ->
-            unifiedProducts.add(
-                cz.drekorian.avonfetcher.model.unified.Product(
-                    validProduct.productName,
-                    validProduct.valid,
-                    validProduct.productId,
-                    validProduct.lineNumber,
-                    validProduct.pageMin,
-                    validProduct.pageMax,
-                    modalProducts[validProduct.productId]?.single()?.isNew ?: false,
-                    modalProducts[validProduct.productId]?.single()?.isOnSale ?: false,
-                    modalProducts[validProduct.productId]?.single()?.listPrice ?: 0.0,
-                    modalProducts[validProduct.productId]?.single()?.salePrice ?: 0.0,
-                    modalProducts[validProduct.productId]?.single()?.unitPrice ?: 0.0,
-                    modalProducts[validProduct.productId]?.single()?.description ?: " ",
-                    modalProducts[validProduct.productId]?.single()?.ingredients ?: " "
+        val unifiedProducts: MutableList<UnifiedProduct> = mutableListOf()
+        pages.forEach { page ->
+            page.hotSpots?.flatMap { hotSpot -> hotSpot.products ?: emptyList() }?.forEach { validProduct ->
+                unifiedProducts.add(
+                    UnifiedProduct(
+                        productName = validProduct.productName,
+                        valid = validProduct.isValid,
+                        productId = validProduct.productId,
+                        lineNumber = validProduct.lineNumber,
+                        pageMin = page.pageMin,
+                        pageMax = page.pageMax,
+                        isNew = modalProducts[validProduct.productId]?.single()?.isNew ?: false,
+                        isOnSale = modalProducts[validProduct.productId]?.single()?.isOnSale ?: false,
+                        listPrice = modalProducts[validProduct.productId]?.single()?.listPrice ?: 0.0,
+                        salePrice = modalProducts[validProduct.productId]?.single()?.salePrice ?: 0.0,
+                        unitPrice = modalProducts[validProduct.productId]?.single()?.unitPrice ?: 0.0,
+                        description = modalProducts[validProduct.productId]?.single()?.description ?: " ",
+                        ingredients = modalProducts[validProduct.productId]?.single()?.ingredients ?: " "
+                    )
                 )
-            )
+            }
         }
 
         val year = campaignId.substring(0..3)

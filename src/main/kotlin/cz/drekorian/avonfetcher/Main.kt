@@ -3,24 +3,27 @@
 package cz.drekorian.avonfetcher
 
 import cz.drekorian.avonfetcher.flow.MasterFlow
+import mu.KLogger
+import mu.KotlinLogging
 import org.slf4j.simple.SimpleLogger.DEFAULT_LOG_LEVEL_KEY
-import java.util.*
+import java.util.Locale
+import java.util.ResourceBundle
 
 private const val ALLOWED_CAMPAIGN_LENGTH = 6
 private const val I18N_RESOURCE_BUNDLE = "locale"
 
+internal lateinit var logger: KLogger
 
-//val logger = KotlinLogging.logger("main")
 fun main(args: Array<String>) {
     if (args.contains("debug")) {
         System.setProperty(DEFAULT_LOG_LEVEL_KEY, "TRACE")
+        logger = KotlinLogging.logger("main")
     }
 
     // load up the I18n singleton
     I18n.resourceBundle = ResourceBundle.getBundle(I18N_RESOURCE_BUNDLE, Locale.UK)
 
     if (args.isEmpty()) {
-        @Suppress("SpellCheckingInspection")
 //        logger.error { I18n.get("usage") }
         return
     }

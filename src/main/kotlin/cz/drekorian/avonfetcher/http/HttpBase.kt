@@ -1,15 +1,15 @@
 package cz.drekorian.avonfetcher.http
 
-internal const val BASE_URL = "https://www.avon.cz/api/brochureapi"
+internal const val BASE_HOST = "www.avon.cz"
+internal const val BASE_PATH_API = "api"
+@Suppress("SpellCheckingInspection")
+internal const val BASE_PATH_BROCHURE_API = "brochureapi"
 
 private const val QUERY_KEY_CAMPAIGN_NUMBER = "campaignNumber"
 private const val QUERY_KEY_LANGUAGE = "language"
 private const val QUERY_KEY_MARKET = "market"
 private const val QUERY_VALUE_LANGUAGE = "cs"
 private const val QUERY_VALUE_MARKET = "CZ"
-
-const val OK = 200
-const val INDENT_FACTOR = 4
 
 fun baseParams(campaignNumber: String): Map<String, String> = mapOf(
     QUERY_KEY_CAMPAIGN_NUMBER to campaignNumber,
