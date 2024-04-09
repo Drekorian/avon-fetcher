@@ -4,7 +4,7 @@ junit = "4.13.2"
 kotlin = "1.9.22"
 kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.8.0"
-ktor = "2.3.9"
+ktor = "2.3.10"
 sj4j = "2.0.12"
 
 [libraries]
