@@ -1,15 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-    java
     kotlin("jvm") version libs.versions.kotlin.get()
     kotlin("plugin.serialization") version libs.versions.kotlin.get()
+    alias(libs.plugins.shadow)
 }
 
 group = "cz.drekorian"
-version = "1.0.1-SNAPSHOT"
+version = "1.1.0"
 
 repositories {
+    gradlePluginPortal()
     mavenCentral()
 }
 
@@ -31,12 +32,24 @@ dependencies {
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
-    manifest {
-        @Suppress("SpellCheckingInspection")
-        attributes["Main-Class"] = "cz.drekorian.avonfetcher.Main"
-    }
 }
 
-tasks.withType<KotlinJvmCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+kotlin {
+    tasks {
+        shadowJar {
+            archiveBaseName.set(rootProject.name)
+            archiveClassifier.set("")
+            archiveVersion.set("${project.version}")
+            archiveAppendix.set("all")
+
+            manifest {
+                attributes("Main-Class" to "${project.group}.Main")
+            }
+            mergeServiceFiles()
+        }
+
+        withType<KotlinJvmCompile> {
+            kotlinOptions.jvmTarget = "1.8"
+        }
+    }
 }
