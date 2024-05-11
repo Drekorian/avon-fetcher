@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "cz.drekorian"
-version = "1.1.0"
+version = "beta7"
 
 repositories {
     gradlePluginPortal()
