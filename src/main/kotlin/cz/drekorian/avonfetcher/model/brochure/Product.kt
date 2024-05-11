@@ -9,10 +9,10 @@ import kotlinx.serialization.json.JsonNames
 data class Product(
     @JsonNames("ProductName") val productName: String = "",
     @JsonNames("Valid") val isValid: Boolean,
-    @JsonNames("ProductId") private val _productId: Int,
+    @JsonNames("ProductId") private val _productId: Int? = null,
     @JsonNames("LineNumber") val lineNumber: String,
 ) {
 
     val productId: String
-        get() = _productId.toString()
+        get() = _productId?.toString() ?: "0"
 }
