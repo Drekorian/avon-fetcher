@@ -43,7 +43,7 @@ kotlin {
             archiveAppendix.set("all")
 
             manifest {
-                attributes("Main-Class" to "${project.group}.Main")
+                attributes("Main-Class" to "${project.group}.avonfetcher.Main")
             }
             mergeServiceFiles()
         }
