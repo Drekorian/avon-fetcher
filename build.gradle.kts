@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm") version libs.versions.kotlin.get()
@@ -32,6 +32,7 @@ dependencies {
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 kotlin {
@@ -47,9 +48,9 @@ kotlin {
             }
             mergeServiceFiles()
         }
+    }
 
-        withType<KotlinJvmCompile> {
-            kotlinOptions.jvmTarget = "1.8"
-        }
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_1_8)
     }
 }
