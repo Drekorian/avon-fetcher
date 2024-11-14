@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     "schedule:daily"
   ],
   "labels": [
@@ -10,7 +10,7 @@
   "rebaseWhen": "conflicted",
   "packageRules": [
     {
-      "matchPaths": [
+      "matchFileNames": [
         ".github/**"
       ],
       "enabled": true,
