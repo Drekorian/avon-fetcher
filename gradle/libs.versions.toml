@@ -5,7 +5,7 @@ kotlin = "2.2.0"
 kotlinLogging = "3.0.5"
 kotlinxCoroutines = "1.10.2"
 ktor = "3.2.3"
-shadow = "8.1.1"
+shadow = "9.0.0-rc3"
 sj4j = "2.0.17"
 
 [libraries]
@@ -26,4 +26,4 @@ sl4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "sj4j" }
 
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
