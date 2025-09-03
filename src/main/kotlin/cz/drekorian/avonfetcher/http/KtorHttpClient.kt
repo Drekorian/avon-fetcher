@@ -6,8 +6,6 @@ import io.ktor.client.engine.HttpClientEngineFactory
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.compression.ContentEncoding
-import io.ktor.client.plugins.DefaultRequest
-import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.compression.compress
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
