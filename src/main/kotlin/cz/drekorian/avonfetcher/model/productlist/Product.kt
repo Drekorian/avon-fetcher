@@ -9,7 +9,7 @@ import kotlinx.serialization.json.JsonNames
 data class Product(
     @JsonNames("Id") val id: String,
     @JsonNames("Name") val name: String,
-    @JsonNames("ListPrice") val listPrice: Double,
+    @JsonNames("ListPrice") val listPrice: Double? = null,
     @JsonNames("SalePrice") val salePrice: Double? = null,
     @JsonNames("UnitPrice") val unitPrice: Double,
     @JsonNames("Description") private val _description: String? = null,
