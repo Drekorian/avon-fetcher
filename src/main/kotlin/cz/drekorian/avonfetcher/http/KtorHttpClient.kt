@@ -30,7 +30,7 @@ internal object KtorHttpClient {
                 logger = HttpLogger
             }
             install(DefaultRequest) {
-                userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:142.0) Gecko/20100101 Firefox/142.0")
+                userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:148.0) Gecko/20100101 Firefox/148.0")
             }
             install(ContentEncoding) {
                 gzip(1.0f)
