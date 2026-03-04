@@ -19,10 +19,10 @@ dependencies {
     implementation(libs.kotlin.logging)
     implementation(libs.kotlin.logging.jvm)
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.ktor.client.cio)
     implementation(libs.ktor.client.contentNegotiation)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.encoding)
+    implementation(libs.ktor.client.java)
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.serialization)
     implementation(libs.ktor.serialization.kotlinx.json)
@@ -32,8 +32,8 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 kotlin {
@@ -52,6 +52,6 @@ kotlin {
     }
 
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_1_8)
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }

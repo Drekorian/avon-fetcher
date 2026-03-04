@@ -3,7 +3,7 @@ package cz.drekorian.avonfetcher.http
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngineConfig
 import io.ktor.client.engine.HttpClientEngineFactory
-import io.ktor.client.engine.cio.CIO
+import io.ktor.client.engine.java.Java
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.compression.ContentEncoding
 import io.ktor.client.plugins.compression.compress
@@ -53,4 +53,4 @@ internal object KtorHttpClient {
     }
 }
 
-private fun getEngineConfig(): HttpClientEngineFactory<HttpClientEngineConfig> = CIO
+private fun getEngineConfig(): HttpClientEngineFactory<HttpClientEngineConfig> = Java
